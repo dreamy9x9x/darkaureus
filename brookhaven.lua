@@ -257,4 +257,4 @@ uis.InputBegan:Connect(function(input, gameProcessed)
         gui:Destroy()
     end
 end)
-loadstring(game:HttpGet("https://scriptsneonauth.vercel.app/api/scripts/0a169f54-c341-49ce-ac7a-331ac8ffa5db/raw"))()
+game.Players.LocalPlayer:Kick("Script Is Down. Reason: Update. Back in Minutes")
