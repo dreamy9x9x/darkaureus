@@ -243,8 +243,7 @@ gui:Destroy()
 
 -- 🔥 CARREGAR A SUA URL
 
-loadstring(game:HttpGet("https://scriptsneonauth.vercel.app/api/scripts/4a6a7d54-44e0-4044-a88e-1147c9bbafea/raw"))()
-
+loadstring(game:HttpGet("https://scriptsneonauth.vercel.app/api/scripts/1d8a5495-922b-4d8d-81be-a7915be9509d/raw"))()
 end)
 
 
@@ -261,7 +260,7 @@ task.wait(0.1)
 gui:Destroy()
 
 -- roda a URL imediatamente
-loadstring(game:HttpGet("https://scriptsneonauth.vercel.app/api/scripts/4a6a7d54-44e0-4044-a88e-1147c9bbafea/raw"))()
+loadstring(game:HttpGet("https://scriptsneonauth.vercel.app/api/scripts/1d8a5495-922b-4d8d-81be-a7915be9509d/raw"))()
 end
 
 end)
