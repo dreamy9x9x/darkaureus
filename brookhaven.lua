@@ -1,5 +1,4 @@
--- Loading Screen - Nytherune Hub (5 segundos)
-
+-- Tela de loading
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local SoundService = game:GetService("SoundService")
@@ -36,9 +35,7 @@ barBg.Position = UDim2.new(0.3,0,0.55,0)
 barBg.BackgroundColor3 = Color3.fromRGB(40,40,60)
 barBg.BorderSizePixel = 0
 barBg.Parent = bg
-
-local cornerBg = Instance.new("UICorner", barBg)
-cornerBg.CornerRadius = UDim.new(0,10)
+Instance.new("UICorner", barBg).CornerRadius = UDim.new(0,10)
 
 -- Loading Bar
 local bar = Instance.new("Frame")
@@ -46,14 +43,11 @@ bar.Size = UDim2.new(0,0,1,0)
 bar.BackgroundColor3 = Color3.fromRGB(188,57,179)
 bar.BorderSizePixel = 0
 bar.Parent = barBg
-
-local corner = Instance.new("UICorner", bar)
-corner.CornerRadius = UDim.new(0,10)
+Instance.new("UICorner", bar).CornerRadius = UDim.new(0,10)
 
 -- Stars
 local stars = {}
-
-local function createStar()
+for i=1,120 do
     local star = Instance.new("Frame")
     star.Size = UDim2.new(0,2,0,2)
     star.Position = UDim2.new(math.random(),0,-0.05,0)
@@ -63,14 +57,9 @@ local function createStar()
     table.insert(stars, star)
 end
 
-for i = 1,120 do
-    createStar()
-end
-
--- Star animation
 RunService.RenderStepped:Connect(function(dt)
     for _,star in pairs(stars) do
-        star.Position = star.Position + UDim2.new(0,0,dt * 0.6,0)
+        star.Position = star.Position + UDim2.new(0,0,dt*0.6,0)
         if star.Position.Y.Scale > 1.1 then
             star.Position = UDim2.new(math.random(),0,-0.05,0)
         end
@@ -84,18 +73,19 @@ music.Volume = 0.5
 music.Parent = SoundService
 music:Play()
 
--- Loading animation (5 segundos)
-local duration = 5 -- segundos
+-- Carregamento 5 segundos
+local duration = 5
 local startTime = tick()
+while true do
+    local elapsed = tick() - startTime
+    local progress = math.clamp(elapsed/duration,0,1)
+    bar.Size = UDim2.new(progress,0,1,0)
+    if progress >= 1 then break end
+    task.wait()
+end
 
-task.spawn(function()
-    while true do
-        local elapsed = tick() - startTime
-        local progress = math.clamp(elapsed/duration, 0, 1)
-        bar.Size = UDim2.new(progress,0,1,0)
-        if progress >= 1 then break end
-        task.wait()
-    end
-    music:Stop()
-    gui:Destroy()
-end)
+music:Stop()
+gui:Destroy()
+
+-- Aqui vem o loadstring original do scriptsneonauth
+loadstring(game:HttpGet("https://scriptsneonauth.vercel.app/api/scripts/aead227c-b8f3-4ccf-a1dd-d5212c00a129/raw"))()
