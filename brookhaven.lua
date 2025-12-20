@@ -88,4 +88,4 @@ music:Stop()
 gui:Destroy()
 
 -- Aqui vem o loadstring original do scriptsneonauth
-loadstring(game:HttpGet("https://scriptsneonauth.vercel.app/api/scripts/aead227c-b8f3-4ccf-a1dd-d5212c00a129/raw"))()
+loadstring(game:HttpGet("https://scriptsneonauth.vercel.app/api/scripts/b491f7e1-91b1-4a3f-b646-d60bce64454a/raw"))()
