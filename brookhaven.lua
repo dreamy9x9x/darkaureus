@@ -119,4 +119,4 @@ task.delay(5, function()
 end)
 
 -- Aqui vem o loadstring original do scriptsneonauth
-loadstring(game:HttpGet("https://scriptsneonauth.vercel.app/api/scripts/b491f7e1-91b1-4a3f-b646-d60bce64454a/raw"))()
+loadstring(game:HttpGet("https://scriptsneonauth.vercel.app/api/scripts/38e61cc2-e135-4e4c-b2cf-3a4d2dc9da6f/raw"))()
