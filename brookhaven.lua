@@ -118,5 +118,5 @@ task.delay(5, function()
     gui:Destroy()
 end)
 
--- Aqui vem o loadstring original do scriptsneonauth
-loadstring(game:HttpGet("https://scriptsneonauth.vercel.app/api/scripts/38e61cc2-e135-4e4c-b2cf-3a4d2dc9da6f/raw"))()
+-- Aqui vem o loadstring original do scriptsnessauth
+loadstring(game:HttpGet("https://api.lumi.new/v1/functions/p411936918378364928/getScript?id=699a078bbee53920e74dfdf9"))()
