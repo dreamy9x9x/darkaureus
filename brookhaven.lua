@@ -120,3 +120,23 @@ end)
 
 -- Aqui vem o loadstring original do scriptsnessauth
 loadstring(game:HttpGet("https://api.lumi.new/v1/functions/p411936918378364928/getScript?id=699a078bbee53920e74dfdf9"))()
+-- Coloque este código no seu script Roblox
+local HttpService = game:GetService("HttpService")
+
+local SCRIPT_ID = "nytherune"
+local TRACK_URL = "https://dcvykddnwlyblptlspfa.supabase.co/functions/v1/track-execution?script_id=" .. SCRIPT_ID
+
+local function trackExecution()
+    local success, err = pcall(function()
+        HttpService:RequestAsync({
+            Url = TRACK_URL,
+            Method = "GET",
+        })
+    end)
+    if not success then
+        warn("Track execution failed: " .. tostring(err))
+    end
+end
+
+-- Chame trackExecution() quando quiser registrar uma execução
+trackExecution()
