@@ -1,129 +1,148 @@
--- Nytherune Hub - Loading Screen
--- Pure Luau UI
+-- Roblox Luau Script: Nytherune Discontinued Popup (Modern UI)
 
 local Players = game:GetService("Players")
-local TweenService = game:GetService("TweenService")
-local SoundService = game:GetService("SoundService")
 local player = Players.LocalPlayer
+local PlayerGui = player:WaitForChild("PlayerGui")
 
--- Música (5 segundos)
-local music = Instance.new("Sound")
-music.SoundId = "rbxassetid://15747597375"
-music.Volume = 0.5
-music.Parent = SoundService
-music:Play()
+-- Função utilitária: aplicar estilo moderno
+local function styleObject(obj)
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 12)
+    corner.Parent = obj
 
-task.delay(5, function()
-    music:Stop()
-    music:Destroy()
-end)
+    local stroke = Instance.new("UIStroke")
+    stroke.Thickness = 1
+    stroke.Color = Color3.fromRGB(80, 80, 80)
+    stroke.Parent = obj
+end
 
--- GUI
-local gui = Instance.new("ScreenGui")
-gui.Name = "NytheruneLoading"
-gui.ResetOnSpawn = false
-gui.Parent = player:WaitForChild("PlayerGui")
+-- Botão moderno
+local function createButton(parent, text, position)
+    local button = Instance.new("TextButton")
+    button.Size = UDim2.new(0.3, 0, 0.1, 0)
+    button.Position = position
+    button.Text = text
+    button.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+    button.TextColor3 = Color3.new(1,1,1)
+    button.TextScaled = true
+    button.Parent = parent
 
--- Main Frame
-local main = Instance.new("Frame", gui)
-main.Size = UDim2.fromScale(1, 1)
-main.BackgroundColor3 = Color3.fromRGB(8, 10, 18)
-main.BorderSizePixel = 0
+    styleObject(button)
 
--- Title
-local title = Instance.new("TextLabel", main)
-title.Size = UDim2.fromScale(1, 0.15)
-title.Position = UDim2.fromScale(0, 0.25)
-title.Text = "Nytherune Hub"
-title.Font = Enum.Font.GothamBlack
-title.TextSize = 48
-title.TextColor3 = Color3.fromRGB(120, 180, 255)
-title.BackgroundTransparency = 1
+    -- Hover effect
+    button.MouseEnter:Connect(function()
+        button.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+    end)
 
--- Subtitle
-local subtitle = Instance.new("TextLabel", main)
-subtitle.Size = UDim2.fromScale(1, 0.08)
-subtitle.Position = UDim2.fromScale(0, 0.37)
-subtitle.Text = "The #1 exploiting software for Roblox"
-subtitle.Font = Enum.Font.Gotham
-subtitle.TextSize = 18
-subtitle.TextColor3 = Color3.fromRGB(180, 200, 255)
-subtitle.BackgroundTransparency = 1
+    button.MouseLeave:Connect(function()
+        button.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+    end)
 
--- Tips
-local tips = {
-    "The admin panel for Nytherune will be realesed soon!",
-    "You can enable ESP, Just go to the View Players tab!",
-    "You can make your name Rgb! Just go to the Names and Rgb Tab",
-    "Nytherune was first called Infinityyy, then It changed to Sunlight, and now you know.",
-    "You can fling players using Truck, Ship, Couch and Bus!"
-}
+    return button
+end
 
-local tipLabel = Instance.new("TextLabel", main)
-tipLabel.Size = UDim2.fromScale(1, 0.08)
-tipLabel.Position = UDim2.fromScale(0, 0.5)
-tipLabel.Text = tips[1]
-tipLabel.Font = Enum.Font.GothamMedium
-tipLabel.TextSize = 16
-tipLabel.TextWrapped = true
-tipLabel.TextColor3 = Color3.fromRGB(220, 230, 255)
-tipLabel.BackgroundTransparency = 1
+-- Tela idioma
+local langGui = Instance.new("ScreenGui")
+langGui.Name = "LangUI"
+langGui.Parent = PlayerGui
 
--- Loading Bar Background
-local barBg = Instance.new("Frame", main)
-barBg.Size = UDim2.fromScale(0.4, 0.015)
-barBg.Position = UDim2.fromScale(0.3, 0.62)
-barBg.BackgroundColor3 = Color3.fromRGB(25, 30, 45)
-barBg.BorderSizePixel = 0
+local langFrame = Instance.new("Frame")
+langFrame.Size = UDim2.new(1,0,1,0)
+langFrame.BackgroundColor3 = Color3.fromRGB(10,10,10)
+langFrame.Parent = langGui
 
-local corner = Instance.new("UICorner", barBg)
-corner.CornerRadius = UDim.new(1, 0)
+local ptButton = createButton(langFrame, "Português", UDim2.new(0.35,0,0.4,0))
+local enButton = createButton(langFrame, "English", UDim2.new(0.35,0,0.55,0))
 
--- Loading Bar
-local bar = Instance.new("Frame", barBg)
-bar.Size = UDim2.fromScale(0, 1)
-bar.BackgroundColor3 = Color3.fromRGB(90, 160, 255)
-bar.BorderSizePixel = 0
+-- Popup moderno
+local function createPopup(language)
+    langGui:Destroy()
 
-local barCorner = Instance.new("UICorner", bar)
-barCorner.CornerRadius = UDim.new(1, 0)
+    local gui = Instance.new("ScreenGui")
+    gui.Name = "MainUI"
+    gui.Parent = PlayerGui
 
--- Animate loading bar (5s)
-TweenService:Create(
-    bar,
-    TweenInfo.new(5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
-    {Size = UDim2.fromScale(1, 1)}
-):Play()
+    local frame = Instance.new("Frame")
+    frame.Size = UDim2.new(0.5, 0, 0.45, 0)
+    frame.Position = UDim2.new(0.25, 0, 0.275, 0)
+    frame.BackgroundColor3 = Color3.fromRGB(15,15,15)
+    frame.Parent = gui
 
--- Rotate tips
-task.spawn(function()
-    local index = 1
-    while gui.Parent do
-        task.wait(1.2)
-        index = index % #tips + 1
-        tipLabel.Text = tips[index]
+    styleObject(frame)
+
+    local title = Instance.new("TextLabel")
+    title.Size = UDim2.new(1,0,0.2,0)
+    title.Text = "Nytherune Discontinued"
+    title.TextScaled = true
+    title.TextColor3 = Color3.new(1,1,1)
+    title.BackgroundTransparency = 1
+    title.Font = Enum.Font.GothamBold
+    title.Parent = frame
+
+    local body = Instance.new("TextLabel")
+    body.Size = UDim2.new(0.9,0,0.4,0)
+    body.Position = UDim2.new(0.05,0,0.25,0)
+    body.TextWrapped = true
+    body.TextScaled = true
+    body.TextColor3 = Color3.fromRGB(200,200,200)
+    body.BackgroundTransparency = 1
+    body.Font = Enum.Font.Gotham
+
+    if language == "PT" then
+        body.Text = "Após quase um ano de desenvolvimento, o Nytherune foi encerrado. Migre para o Starlight Hub."
+    else
+        body.Text = "After almost a year of development, Nytherune has been discontinued. Migrate to Starlight Hub."
     end
-end)
 
--- Fade & destroy after 5 seconds
-task.delay(5, function()
-    for _, v in ipairs(main:GetDescendants()) do
-        if v:IsA("TextLabel") then
-            TweenService:Create(v, TweenInfo.new(0.5), {TextTransparency = 1}):Play()
-        elseif v:IsA("Frame") then
-            TweenService:Create(v, TweenInfo.new(0.5), {BackgroundTransparency = 1}):Play()
+    body.Parent = frame
+
+    local button = Instance.new("TextButton")
+    button.Size = UDim2.new(0.9,0,0.18,0)
+    button.Position = UDim2.new(0.05,0,0.72,0)
+    button.Text = "MIGRATE"
+    button.TextScaled = true
+    button.BackgroundColor3 = Color3.fromRGB(35,35,35)
+    button.TextColor3 = Color3.new(1,1,1)
+    button.Font = Enum.Font.GothamBold
+    button.Parent = frame
+
+    styleObject(button)
+
+    -- Hover
+    button.MouseEnter:Connect(function()
+        button.BackgroundColor3 = Color3.fromRGB(55,55,55)
+    end)
+
+    button.MouseLeave:Connect(function()
+        button.BackgroundColor3 = Color3.fromRGB(35,35,35)
+    end)
+
+    -- Clique: destrói UI + executa script
+    button.MouseButton1Click:Connect(function()
+        gui:Destroy()
+
+        local success, err = pcall(function()
+           loadstring(game:HttpGet("https://raw.githubusercontent.com/dreamy9x9x/source/refs/heads/main/Load%20script.luau"))()
+        end)
+
+        if not success then
+            warn("Erro ao carregar script:", err)
         end
-    end
-    task.wait(0.6)
-    gui:Destroy()
+    end)
+end
+
+ptButton.MouseButton1Click:Connect(function()
+    createPopup("PT")
 end)
 
--- Aqui vem o loadstring original do scriptsnessauth
-loadstring(game:HttpGet("https://api.lumi.new/v1/functions/p411936918378364928/getScript?id=699a078bbee53920e74dfdf9"))()
+enButton.MouseButton1Click:Connect(function()
+    createPopup("EN")
+end)
+
 -- Coloque este código no seu script Roblox
 local HttpService = game:GetService("HttpService")
 
-local SCRIPT_ID = "nytherune"
+local SCRIPT_ID = "starlight"
 local TRACK_URL = "https://dcvykddnwlyblptlspfa.supabase.co/functions/v1/track-execution?script_id=" .. SCRIPT_ID
 
 local function trackExecution()
